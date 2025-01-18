@@ -28,4 +28,4 @@ jobs:
       run: echo "COOKIES_KEY=googtrans=/en/en; login=1; user=258456983046-185.107.56.66; show_nt1=1; _ga=GA1.1.2086520039.1737207383; Hm_lvt_2b147ccaeef7e49f5f9553cadfdf8428=1737207384; HMACCOUNT=8930EFD4022BBA94; _ga_N7BJYK4G71=GS1.1.1737207383.1.1.1737207395.0.0.0; Hm_lpvt_2b147ccaeef7e49f5f9553cadfdf8428=1737207398" >> $GITHUB_ENV
 
     - name: Run the Python script
-      run: python3 your_script.py  # Replace 'your_script.py' with your actual script filename
+      run: python3 main.py  # Replace 'your_script.py' with your actual script filename
