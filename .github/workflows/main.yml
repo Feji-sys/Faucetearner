@@ -1,31 +1,36 @@
-name: Run XRP Script
+name: Python Application Workflow
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows for manual triggering from GitHub UI
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  run-script:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.8'  # You can change this to the Python version you prefer
+        python-version: '3.9'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests rich
+        pip install requests rich fake_useragent beautifulsoup4
 
-    - name: Set up the environment variable for cookies
-      run: echo "COOKIES_KEY=googtrans=/en/en; login=1; user=258456983046-185.107.56.66; show_nt1=1; _ga=GA1.1.2086520039.1737207383; Hm_lvt_2b147ccaeef7e49f5f9553cadfdf8428=1737207384; HMACCOUNT=8930EFD4022BBA94; _ga_N7BJYK4G71=GS1.1.1737207383.1.1.1737207395.0.0.0; Hm_lpvt_2b147ccaeef7e49f5f9553cadfdf8428=1737207398" >> $GITHUB_ENV
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 --ignore=E501,E722 .
 
-    - name: Run the Python script
-      run: python3 main.py  # Replace 'your_script.py' with your actual script filename
+    - name: Run Script
+      run: |
+        python xrpminer.py
